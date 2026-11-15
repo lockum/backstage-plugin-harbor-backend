@@ -71,11 +71,14 @@ async function findRepos(
           json.repository.map(
             (v2: { project_name: string; repository_name: string }) => {
               const prefix = `${v2.project_name}/`
-              const repoPath = v2.repository_name.startsWith(prefix)
-                ? v2.repository_name.slice(prefix.length)
-                : v2.repository_name.includes('/')
-                ? v2.repository_name.slice(v2.repository_name.indexOf('/') + 1)
-                : v2.repository_name
+              let repoPath = v2.repository_name
+              if (v2.repository_name.startsWith(prefix)) {
+                repoPath = v2.repository_name.slice(prefix.length)
+              } else if (v2.repository_name.includes('/')) {
+                repoPath = v2.repository_name.slice(
+                  v2.repository_name.indexOf('/') + 1
+                )
+              }
 
               const repoDetails: RepoInformation = {
                 project: v2.project_name,
