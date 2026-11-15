@@ -59,6 +59,10 @@ describe('createRouter', () => {
     app = express().use(router)
   })
 
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('returns artifact info successfully', async () => {
     const response = await request(app)
       .get('/artifacts')

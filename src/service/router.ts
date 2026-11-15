@@ -38,21 +38,29 @@ export async function createRouter(
 
       if (slug) {
         const decodedSlug = decodeURIComponent(slug).trim()
-        const parts = decodedSlug.split('/')
-        if (parts.length >= 2) {
-          const matchingInstance = harborInstances.find(
-            (i) => i.host && i.host.toLowerCase() === parts[0].toLowerCase()
-          )
-          if (matchingInstance) {
-            host = matchingInstance.host
-            project = parts[1]
-            repository = parts.slice(2).join('/')
-          } else if (
-            parts[0].includes('.') ||
-            parts[0].includes(':') ||
-            parts[0].toLowerCase() === 'localhost'
-          ) {
-            if (parts.length >= 3) {
+
+        const matchingInstance = harborInstances.find(
+          (i) =>
+            i.host &&
+            (decodedSlug.toLowerCase() === i.host.toLowerCase() ||
+              decodedSlug.toLowerCase().startsWith(`${i.host.toLowerCase()}/`))
+        )
+
+        if (matchingInstance) {
+          host = matchingInstance.host
+          const remainder = decodedSlug.slice(matchingInstance.host.length + 1)
+          const remainderParts = remainder.split('/')
+          project = remainderParts[0]
+          repository = remainderParts.slice(1).join('/')
+        } else {
+          const cleanSlug = decodedSlug.replace(/^https?:\/\//, '')
+          const parts = cleanSlug.split('/')
+          if (parts.length >= 2) {
+            const isHost =
+              parts[0].includes('.') ||
+              parts[0].includes(':') ||
+              parts[0].toLowerCase() === 'localhost'
+            if (isHost && parts.length >= 3) {
               host = parts[0]
               project = parts[1]
               repository = parts.slice(2).join('/')
@@ -63,8 +71,8 @@ export async function createRouter(
             }
           } else {
             host = ''
-            project = parts[0]
-            repository = parts.slice(1).join('/')
+            project = cleanSlug
+            repository = ''
           }
         }
       } else if (host && project && repository) {
