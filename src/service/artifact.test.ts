@@ -80,4 +80,51 @@ describe('createRouter', () => {
     expect(art).toHaveProperty('projectID', 'proj123')
     expect(art).toHaveProperty('repoUrl', 'http://foo.bar')
   })
+
+  it('handles multi-path repository (project/subproject/testrepo)', async () => {
+    const { getArtifacts } = require('./artifact')
+    const response = await request(app)
+      .get('/artifacts')
+      .query({ project: 'my-project', repository: 'subproject/testrepo' })
+
+    expect(response.statusCode).toEqual(200)
+    expect(getArtifacts).toHaveBeenCalledWith(
+      expect.any(Array),
+      '',
+      'my-project',
+      'subproject/testrepo'
+    )
+  })
+
+  it('handles multi-path repository slug query parameter', async () => {
+    const { getArtifacts } = require('./artifact')
+    const response = await request(app)
+      .get('/artifacts')
+      .query({ slug: 'my-project/path1/path2/testrepo' })
+
+    expect(response.statusCode).toEqual(200)
+    expect(getArtifacts).toHaveBeenCalledWith(
+      expect.any(Array),
+      '',
+      'my-project',
+      'path1/path2/testrepo'
+    )
+  })
+
+  it('handles multi-path repository slug with host matching configured instance', async () => {
+    const { getArtifacts } = require('./artifact')
+    const response = await request(app)
+      .get('/artifacts')
+      .query({
+        slug: 'https://my-test-harbor.example.com/my-project/path1/path2/testrepo',
+      })
+
+    expect(response.statusCode).toEqual(200)
+    expect(getArtifacts).toHaveBeenCalledWith(
+      expect.any(Array),
+      'https://my-test-harbor.example.com',
+      'my-project',
+      'path1/path2/testrepo'
+    )
+  })
 })
