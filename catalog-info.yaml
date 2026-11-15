@@ -4,8 +4,8 @@ metadata:
   name: backstage-plugin-harbor-backend
   description: Backend plugin to Backstage for Harbor integration.
   annotations:
-    github.com/project-slug: Digitalist-Open-Cloud/backstage-plugin-harbor-backend
+    github.com/project-slug: lockum/backstage-plugin-harbor-backend
 spec:
   type: library
   lifecycle: production
-  owner: digitalist-open-cloud
+  owner: lockum

@@ -1,5 +1,5 @@
 {
-  "name": "@digitalist-open-cloud/backstage-plugin-harbor-backend",
+  "name": "@lockum/backstage-plugin-harbor-backend",
   "version": "0.9.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -7,6 +7,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
+    "url": "https://github.com/lockum/backstage-plugin-harbor-backend.git",
     "directory": "."
   },
   "publishConfig": {
@@ -18,8 +19,8 @@
     "role": "backend-plugin",
     "pluginId": "harbor",
     "pluginPackages": [
-      "@digitalist-open-cloud/backstage-plugin-harbor",
-      "@digitalist-open-cloud/backstage-plugin-harbor-backend"
+      "@lockum/backstage-plugin-harbor",
+      "@lockum/backstage-plugin-harbor-backend"
     ]
   },
   "configSchema": "config.d.ts",

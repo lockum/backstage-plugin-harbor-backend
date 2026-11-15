@@ -1,6 +1,6 @@
 # Backstage Harbor Backend Plugin
 
-[![npm version](https://img.shields.io/npm/v/@digitalist-open-cloud/backstage-plugin-harbor-backend.svg)](https://www.npmjs.com/package/@digitalist-open-cloud/backstage-plugin-harbor-backend)
+[![npm version](https://img.shields.io/npm/v/@lockum/backstage-plugin-harbor-backend.svg)](https://www.npmjs.com/package/@lockum/backstage-plugin-harbor-backend)
 
 The Harbor Backend Plugin acts as the API bridge between your Backstage instance and [CNCF Harbor](https://goharbor.io/) registry instances. It queries the Harbor API v2.0 to fetch container artifacts, tags, digest information, and vulnerability reports.
 
@@ -46,7 +46,7 @@ const backend = createBackend();
 // ... other plugins ...
 
 // Add Harbor Backend plugin
-backend.add(import('@digitalist-open-cloud/backstage-plugin-harbor-backend'));
+backend.add(import('@lockum/backstage-plugin-harbor-backend'));
 
 backend.start();
 ```
@@ -56,7 +56,7 @@ backend.start();
 Create `packages/backend/src/plugins/harbor.ts`:
 
 ```ts
-import { createRouter } from '@digitalist-open-cloud/backstage-plugin-harbor-backend';
+import { createRouter } from '@lockum/backstage-plugin-harbor-backend';
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
 
